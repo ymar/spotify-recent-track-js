@@ -1,0 +1,29 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<script>
+$(function () {
+
+				var user = ""
+				var apiKey = ""
+				//using jQuery's GET method for ajax
+				$.get("http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&limit=2&user=" + user + "&api_key=" + apiKey,
+						function (response) { //callback function, runs upon receiving response
+								var output = '';
+								$(response).find('track:first').each(function () {
+										var trackName = $(this).find('name').text(); //name of the track
+										var artist = $(this).find('artist').text(); //artist
+										var trackFinal = "";
+
+										trackFinal += trackName + " - " + artist
+										output += trackFinal;
+								});
+								output += "</ul>";
+								$('#recent-track').html(output);
+						},
+						"xml"); //expecting XML as a response, could leave this blank
+		}); //execute wrapper function with $ = jQuery
+
+
+    </script>
+
+    <div id="recent-track"></div>
